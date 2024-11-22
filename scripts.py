@@ -1,9 +1,10 @@
 import subprocess
 import uvicorn
 
+from be_task_ca import common
 
 def start():
-    uvicorn.run("be_task_ca.app:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("be_task_ca.app:app", host="0.0.0.0", port=common.APP_PORT, reload=True)
 
 
 def auto_format():
@@ -15,7 +16,7 @@ def run_linter():
 
 
 def run_tests():
-    subprocess.call(["pytest"])
+    subprocess.call(["pytest", "-v"])
 
 
 def create_dependency_graph():

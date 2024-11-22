@@ -54,6 +54,7 @@ It could be done by:
    See the code changes I've made TODO.
 
 2. Isolate a Cart usecase from the User usecase. Move the `add_item_to_cart` there.
+   The cart usecase can still be used from the same user router.
 
 3. Item usecase gets a `get_single` method, that will be used by Cart usecase.
 
@@ -69,16 +70,29 @@ It could be done by:
 1. Show dependencies in the models with imports and not using bare strings in the foreign keys.
 
 2. Don't split the code vertically into "user" and "item".
-   Instead have directories for the layers.
+   Instead have directories for the layers:
+
+   - interface (routers + schemas)
+   - usecases
+   - connectors (repositories)
+   - entities
+
+   Not every aspect of the application needs to exist in all layers. Some concepts may merge together on some levels
+
    Then the models could be visibly closely related in a single file or directory.
 
 3. Have three usecases - Cart, Item, User. Item and User are independent, Cart depends on Item and User.
 
+4. Use type annotations more - will show dependencies between routers and schemas
+
 # Stretch goals
 * Fork the repository and start refactoring - DONE, see [here](https://github.com/butla/be-task-ca)
 * Write meaningful tests (TODO add notes)
-  - functional one going through everything
+  - I've changed the style from a separate `tests` directory to `*_test.py` files that are located close to what
+    they're testing.
+  - a high-level test checking a happy path through the entire app that will help with refactoring:
+    `be_task_ca/app_test.py`
   - add item to cart, wrong item or user ID
-  - pure usecase unit test example
+  - pure unit test for a usecase showing that we can test usecases in memory: TODO
 * Replace the SQL repository with an in-memory implementation
   - use depends with a config objects
