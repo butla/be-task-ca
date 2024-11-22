@@ -50,7 +50,9 @@ def create_user(create_user: CreateUserRequest, db: Session) -> CreateUserRespon
     )
 
 
-def add_item_to_cart(user_id: int, cart_item: AddToCartRequest, db: Session) -> AddToCartResponse:
+def add_item_to_cart(
+    user_id: int, cart_item: AddToCartRequest, db: Session
+) -> AddToCartResponse:
     user: User = find_user_by_id(user_id, db)
     if user is None:
         raise HTTPException(status_code=404, detail="User does not exist")
