@@ -51,8 +51,6 @@ It could be done by:
    A specific implementation would get injected with the FastAPI `Depends` mechanism.
    The chosen implementation might depend on the configuration.
 
-   See the code changes I've made TODO.
-
 2. Isolate a Cart usecase from the User usecase. Move the `add_item_to_cart` there.
    The cart usecase can still be used from the same user router.
 
@@ -86,13 +84,13 @@ It could be done by:
 4. Use type annotations more - will show dependencies between routers and schemas
 
 # Stretch goals
-* Fork the repository and start refactoring - DONE, see [here](https://github.com/butla/be-task-ca)
-* Write meaningful tests (TODO add notes)
+* Fork the repository and start refactoring - see [here](https://github.com/butla/be-task-ca)
+* Write meaningful tests 
   - I've changed the style from a separate `tests` directory to `*_test.py` files that are located close to what
     they're testing.
   - a high-level test checking a happy path through the entire app that will help with refactoring:
     `be_task_ca/app_test.py`
-  - add item to cart, wrong item or user ID
-  - pure unit test for a usecase showing that we can test usecases in memory: TODO
+  - TODO: add item to cart bad cases: wrong item or user ID
+  - TODO: pure unit test for a usecase showing that we can test usecases in memory
 * Replace the SQL repository with an in-memory implementation
   - use depends with a config objects
