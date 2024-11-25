@@ -3,19 +3,10 @@ from typing import List
 import uuid
 
 from sqlalchemy import UUID, ForeignKey
-from be_task_ca.database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-
-@dataclass
-class CartItem(Base):
-    __tablename__ = "cart_items"
-
-    user_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("users.id"), primary_key=True, index=True
-    )
-    item_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("items.id"), primary_key=True)
-    quantity: Mapped[int]
+from be_task_ca.database import Base
+from be_task_ca.item.model import Item
 
 
 @dataclass
@@ -33,3 +24,14 @@ class User(Base):
     hashed_password: Mapped[str]
     shipping_address: Mapped[str] = mapped_column(default=None)
     cart_items: Mapped[List["CartItem"]] = relationship()
+
+
+@dataclass
+class CartItem(Base):
+    __tablename__ = "cart_items"
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey(f"{User.__tablename__}.id"), primary_key=True, index=True
+    )
+    item_id: Mapped[uuid.UUID] = mapped_column(ForeignKey(f"{Item.__tablename__}.id"), primary_key=True)
+    quantity: Mapped[int]
