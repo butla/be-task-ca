@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from .usecases import create_item, get_all
+from .usecases import ItemUsecase
 
 from ..common import get_db
 
 from .schema import CreateItemRequest, CreateItemResponse
+from be_task_ca.interface import dependencies
 
 
 item_router = APIRouter(
@@ -16,11 +17,14 @@ item_router = APIRouter(
 
 @item_router.post("/")
 async def post_item(
-    item: CreateItemRequest, db: Session = Depends(get_db)
+    item: CreateItemRequest,
+    items_usecase: ItemUsecase = Depends(dependencies.get_items_usecase),
 ) -> CreateItemResponse:
-    return create_item(item, db)
+    return items_usecase.create_item(item)
 
 
 @item_router.get("/")
-async def get_items(db: Session = Depends(get_db)):
-    return get_all(db)
+async def get_items(
+    items_usecase: ItemUsecase = Depends(dependencies.get_items_usecase),
+):
+    return items_usecase.get_all()
