@@ -33,5 +33,7 @@ class CartItem(Base):
     user_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey(f"{User.__tablename__}.id"), primary_key=True, index=True
     )
-    item_id: Mapped[uuid.UUID] = mapped_column(ForeignKey(f"{Item.__tablename__}.id"), primary_key=True)
+    item_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey(f"{Item.__tablename__}.id"), primary_key=True
+    )
     quantity: Mapped[int]

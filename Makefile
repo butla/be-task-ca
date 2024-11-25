@@ -11,3 +11,10 @@ test_reload:
 
 destroy:
 	docker compose down -v --remove-orphans
+
+format:
+	poetry run format
+
+static_analysis:
+	poetry run typing
+	poetry run lint
